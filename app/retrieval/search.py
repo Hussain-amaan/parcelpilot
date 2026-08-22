@@ -21,13 +21,24 @@ collection = client.get_collection(
 model = SentenceTransformer(EMBEDDING_MODEL)
 
 
-def search_documents(query, top_k=5):
+def search_documents(query, top_k=5, account_id=None):
     """
     Search ParcelPilot documents using semantic similarity.
+
+    If account_id is supplied, account-specific active agreements
+    are included alongside general current documentation.
     """
 
+    query_text = query
+
+    if account_id:
+        query_text = (
+            f"Account: {account_id}. "
+            f"Customer-specific question: {query}"
+        )
+
     query_embedding = model.encode(
-        [query]
+        [query_text]
     ).tolist()
 
     results = collection.query(
@@ -46,7 +57,6 @@ def search_documents(query, top_k=5):
         metadatas,
         distances
     ):
-
         matches.append({
             "text": document,
             "metadata": metadata,
