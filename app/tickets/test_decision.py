@@ -37,3 +37,13 @@ print("\nRecommendations:")
 for recommendation in result["recommendations"]:
     print("Issue:", recommendation["issue_id"])
     print("Action:", recommendation["action"])
+
+print("\nRecommendations:")
+
+for recommendation in result["recommendations"]:
+    print("Issue:", recommendation["issue_id"])
+    print("Action:", recommendation["action"])
+
+print("\nService Credit:")
+
+print(result["service_credit"])    

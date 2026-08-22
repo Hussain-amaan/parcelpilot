@@ -43,4 +43,6 @@ for ticket_id, assessment_time in tickets:
         print("-", recommendation["issue_id"])
         print(" ", recommendation["action"])
 
-    print()
+    print("\nSERVICE CREDIT:")
+
+    print(result["service_credit"])

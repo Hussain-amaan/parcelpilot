@@ -3,7 +3,7 @@ from app.data.queries import (
     get_account,
     get_orders_for_account,
 )
-
+from app.tickets.service_credit import evaluate_failed_pickup_credit
 from app.tickets.analyzer import classify_severity
 from app.tickets.sla import get_response_target
 from app.tickets.sla_calculator import calculate_deadline
@@ -112,6 +112,26 @@ def analyze_ticket_decision(
         ticket["account_id"]
     )
 
+    service_credit = None
+
+# Service credits are only evaluated when we have
+# enough information to identify a failed pickup.
+    pickup_related = (
+    "pickup" in ticket["subject"].lower()
+    or "pickup" in ticket["description"].lower()
+    or "picked up" in ticket["description"].lower()
+    )
+
+    if pickup_related:
+        service_credit = {
+            "eligible": False,
+            "credit_inr": 0,
+            "reason": (
+            "Service-credit assessment requires verified "
+            "pickup timing and carrier-fault information."
+            )
+        }
+
     severity = classify_severity(ticket)
 
     sla = get_sla_target(
@@ -144,4 +164,5 @@ def analyze_ticket_decision(
     "escalation_required": escalation_required,
     "known_issues": known_issues,
     "recommendations": recommendations,
+    "service_credit": service_credit,
     }
