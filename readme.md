@@ -105,6 +105,7 @@ parcelpilot/
 ├── tests/
 │   ├── agents/
 │   └── tickets/
+|
 ├── streamlit_app     # ui made with streamlit
 ├── README.md
 └── requirements.txt
