@@ -156,6 +156,7 @@ def analyze_ticket_decision(
 
     return {
     "ticket_id": ticket_id,
+    "account_id": account["account_id"],
     "account": account["account_name"],
     "plan": account["plan"],
     "severity": severity,
@@ -165,4 +166,5 @@ def analyze_ticket_decision(
     "known_issues": known_issues,
     "recommendations": recommendations,
     "service_credit": service_credit,
+
     }
