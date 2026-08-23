@@ -1,89 +1,74 @@
-# ParcelPilot AI Support Agent
+# 📦 ParcelPilot Support Assistant
 
-An AI-assisted customer support decision system for ParcelPilot that combines deterministic business logic, document retrieval, and LLM-based response generation.
+AI-assisted customer support agent built for the ParcelPilot AI Agent Assessment.
 
-The system is designed around an important principle:
+The application helps answer support questions involving:
 
-> **Business and policy decisions are deterministic; the LLM is used only for generating the final customer-facing response.**
+- Customer accounts
+- Orders and shipments
+- Support tickets
+- SLAs
+- Cancellation policies
+- Service credits
+- Product documentation
+- Known issues
+- Support escalations
 
-This makes the system more reliable, traceable, and resistant to hallucinated policy decisions.
+The system combines deterministic business logic, document retrieval, structured-data tools, and LLM-based response generation.
 
----
+## Core Design Principle
 
-## 1. Project Overview
+> **Deterministic systems make business decisions; the LLM handles response wording.**
 
-ParcelPilot Support Agent analyzes customer support tickets and produces an actionable support decision.
+The LLM does not determine:
 
-For each ticket, the system can determine:
-
-- Ticket severity
-- Applicable SLA
-- SLA response target
-- SLA deadline
-- SLA breach status
-- Escalation requirement
-- Relevant known issues
-- Recommended actions
-- Cancellation eligibility
+- SLA values
+- SLA breaches
+- Cancellation fees
 - Service-credit eligibility
-- Final customer-facing response
+- Ticket severity
+- Escalation requirements
 
-The system uses customer-specific agreements and current support policies stored in the document knowledge base.
+These decisions are calculated by deterministic application logic.
 
-An LLM is then used to convert the deterministic decision into a professional customer response.
-
-If the LLM is unavailable, rate-limited, or produces a response that fails validation, the system falls back to a deterministic response.
+The generated response is then validated. If the LLM is unavailable or produces an invalid response, the system uses a deterministic fallback response.
 
 ---
 
-## 2. Architecture
+## Architecture
 
 ```text
-                         ┌─────────────────────┐
-                         │    Support Ticket   │
-                         └──────────┬──────────┘
-                                    │
-                                    ▼
-                         ┌─────────────────────┐
-                         │   Ticket / Account  │
-                         │       Retrieval     │
-                         └──────────┬──────────┘
-                                    │
-                                    ▼
-                    ┌──────────────────────────────┐
-                    │   Deterministic Decision     │
-                    │           Engine             │
-                    ├──────────────────────────────┤
-                    │ Severity Classification      │
-                    │ SLA Retrieval & Parsing      │
-                    │ SLA Deadline Calculation    │
-                    │ SLA Breach Detection        │
-                    │ Escalation Decision          │
-                    │ Known Issue Retrieval        │
-                    │ Recommendations              │
-                    │ Cancellation Evaluation      │
-                    │ Service Credit Evaluation    │
-                    └──────────────┬───────────────┘
-                                   │
-                                   ▼
-                         ┌─────────────────────┐
-                         │   Support Decision  │
-                         └──────────┬──────────┘
-                                    │
-                                    ▼
-                         ┌─────────────────────┐
-                         │    LLM Response    │
-                         │      Generator      │
-                         └──────────┬──────────┘
-                                    │
-                                    ▼
-                         ┌─────────────────────┐
-                         │ Response Validator  │
-                         └──────────┬──────────┘
-                                    │
-                       ┌────────────┴────────────┐
-                       │                         │
-                 Valid Response           Invalid / Failed
-                       │                         │
-                       ▼                         ▼
-                Customer Response      Deterministic Fallback
+Streamlit UI
+     │
+     ▼
+Chat Router
+     │
+     ├───────────────┬────────────────┐
+     ▼               ▼                ▼
+Document Search   Data Tools      Action Tools
+     │               │                │
+     ▼               ▼                ▼
+Policies          SQLite          Escalation
+Agreements        Accounts        Confirmation
+SOPs              Orders
+Known Issues      Tickets
+     │               │
+     └───────────────┤
+                     ▼
+             Deterministic
+             Decision Layer
+                     │
+                     ▼
+              LLM Response
+                 Generation
+                     │
+                     ▼
+              Response Validator
+                     │
+               ┌─────┴─────┐
+               ▼           ▼
+             Valid       Invalid
+               │           │
+               ▼           ▼
+             LLM       Deterministic
+           Response       Fallback
