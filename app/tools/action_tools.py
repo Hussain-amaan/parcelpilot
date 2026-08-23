@@ -3,7 +3,7 @@ from pathlib import Path
 import json
 
 
-BASE_DIR = Path(__file__).resolve().parents[3]
+BASE_DIR = Path(__file__).resolve().parents[2]
 
 ESCALATION_FILE = (
     BASE_DIR

@@ -1,0 +1,11 @@
+[
+  {
+    "escalation_id": "ESC-0001",
+    "ticket_id": "TKT-501",
+    "account_id": "ACCT-001",
+    "reason": "P1 incident with SLA breach",
+    "priority": "P1",
+    "status": "CREATED",
+    "created_at": "2026-08-23T17:04:52.836230"
+  }
+]
