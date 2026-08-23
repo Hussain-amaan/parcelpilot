@@ -89,7 +89,7 @@ parcelpilot/
 │   ├── retrieval/      # PDF processing and vector search
 │   ├── tickets/        # SLA, ticket analysis and service-credit logic
 │   ├── tools/          # Document, data and state-changing tools
-│   └── ui/             # Streamlit chat interface
+│               
 │
 ├── data/
 │   ├── raw/            # Structured CSV data
