@@ -63,7 +63,9 @@ This reduces the risk of hallucinated contractual or policy decisions while stil
                      ▼                   ▼
                  LLM Response      Deterministic
                                    Fallback
-3. Agent Design
+```
+
+### 3. Agent Design
 
 The agent uses a routing-based architecture.
 
@@ -104,7 +106,7 @@ Customer Response
 
 The system does not require the LLM to independently determine the cancellation policy.
 
-4. Deterministic Decision Layer
+### 4. Deterministic Decision Layer
 
 Business-critical decisions are handled by deterministic Python modules.
 
