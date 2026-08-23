@@ -72,3 +72,40 @@ Known Issues      Tickets
                ▼           ▼
              LLM       Deterministic
            Response       Fallback
+
+
+```
+
+# Folder Structure :
+
+## Project Structure
+
+```text
+parcelpilot/
+├── app/
+│   ├── agent/          # Chat routing, LLM response generation and validation
+│   ├── data/           # SQLite database access and queries
+│   ├── policy/         # Deterministic policy evaluation
+│   ├── retrieval/      # PDF processing and vector search
+│   ├── tickets/        # SLA, ticket analysis and service-credit logic
+│   ├── tools/          # Document, data and state-changing tools
+│   └── ui/             # Streamlit chat interface
+│
+├── data/
+│   ├── raw/            # Structured CSV data
+│   ├── chroma/         # Vector store
+│   ├── parcelpilot.db  # SQLite operational database
+│   └── escalations.json # Mock escalation state
+│
+├── documents/          # Supplied ParcelPilot PDF knowledge base
+├── docs/
+│   ├── ARCHITECTURE.md
+│   └── PRODUCT_NOTE.md
+│
+├── tests/
+│   ├── agents/
+│   └── tickets/
+│
+├── README.md
+└── requirements.txt
+
